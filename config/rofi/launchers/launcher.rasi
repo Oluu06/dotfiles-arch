@@ -25,24 +25,26 @@
 
 window {
     location: center;
-    width: 600px;
-    background-color: @bg;
-    border: 2px;
+    width: 700px;
+    background-color: rgba(30, 30, 46, 0.95);
+    border: 3px;
     border-color: @primary;
-    border-radius: 10px;
+    border-radius: 16px;
+    padding: 8px;
 }
 
 mainbox {
-    padding: 12px;
+    padding: 20px;
+    spacing: 15px;
 }
 
 inputbar {
     background-color: @bg-alt;
     border-color: @primary;
     border: 2px;
-    border-radius: 8px;
-    padding: 12px;
-    spacing: 12px;
+    border-radius: 12px;
+    padding: 15px;
+    spacing: 15px;
     children: [prompt, entry];
 }
 
@@ -69,16 +71,19 @@ textbox {
 
 listview {
     background-color: transparent;
-    margin: 12px 0 0;
-    lines: 8;
+    margin: 15px 0 0;
+    lines: 10;
     columns: 1;
     fixed-height: false;
+    spacing: 5px;
 }
 
 element {
-    padding: 10px;
-    spacing: 10px;
-    border-radius: 8px;
+    padding: 12px 15px;
+    spacing: 12px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
 }
 
 element normal normal {
@@ -97,6 +102,7 @@ element selected normal,
 element selected active {
     background-color: @bg-alt;
     text-color: @primary;
+    border-color: @primary;
 }
 
 element selected urgent {
@@ -105,8 +111,9 @@ element selected urgent {
 }
 
 element-icon {
-    size: 1.2em;
+    size: 1.5em;
     vertical-align: 0.5;
+    margin-right: 8px;
 }
 
 element-text {
