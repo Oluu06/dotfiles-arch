@@ -1,0 +1,306 @@
+#############################################
+# sxhkd - Keybindings Configuration
+# Super = Windows/Command key
+#############################################
+
+#############################################
+# Applications
+#############################################
+
+# Terminal
+super + Return
+    kitty
+
+# Application launcher
+super + space
+    rofi -show drun -theme ~/.config/rofi/launchers/launcher.rasi
+
+# Window switcher
+super + Tab
+    rofi -show window -theme ~/.config/rofi/launchers/launcher.rasi
+
+# File manager
+super + e
+    thunar
+
+# Browser
+super + b
+    firefox
+
+# Power menu
+super + shift + p
+    ~/.local/bin/powermenu.sh
+
+#############################################
+# System Controls
+#############################################
+
+# Reload sxhkd
+super + Escape
+    pkill -USR1 -x sxhkd && notify-send "sxhkd" "Configuration reloaded"
+
+# Lock screen
+super + l
+    betterlockscreen -l
+
+# Screenshot (full screen)
+Print
+    flameshot full -p ~/Pictures/Screenshots
+
+# Screenshot (selection)
+super + shift + s
+    flameshot gui
+
+# Screenshot (current window)
+super + Print
+    flameshot screen -p ~/Pictures/Screenshots
+
+#############################################
+# Audio Controls
+#############################################
+
+# Volume up
+XF86AudioRaiseVolume
+    ~/.local/bin/audio-control.sh up
+
+# Volume down
+XF86AudioLowerVolume
+    ~/.local/bin/audio-control.sh down
+
+# Mute
+XF86AudioMute
+    ~/.local/bin/audio-control.sh mute
+
+# Play/Pause
+XF86AudioPlay
+    playerctl play-pause
+
+# Next track
+XF86AudioNext
+    playerctl next
+
+# Previous track
+XF86AudioPrev
+    playerctl previous
+
+#############################################
+# Brightness Controls
+#############################################
+
+# Brightness up
+XF86MonBrightnessUp
+    ~/.local/bin/brightness-control.sh up
+
+# Brightness down
+XF86MonBrightnessDown
+    ~/.local/bin/brightness-control.sh down
+
+#############################################
+# bspwm - Window Management
+#############################################
+
+# Close window
+super + shift + q
+    bspc node -c
+
+# Kill window
+super + shift + alt + q
+    bspc node -k
+
+# Reload bspwm
+super + shift + r
+    ~/.config/bspwm/bspwmrc && notify-send "bspwm" "Configuration reloaded"
+
+# Quit bspwm
+super + shift + e
+    bspc quit
+
+#############################################
+# Window States
+#############################################
+
+# Toggle tiling/floating
+super + shift + space
+    bspc node -t ~floating
+
+# Toggle fullscreen
+super + f
+    bspc node -t ~fullscreen
+
+# Toggle pseudo-tiled
+super + shift + t
+    bspc node -t ~pseudo_tiled
+
+# Set window state to tiled
+super + t
+    bspc node -t tiled
+
+#############################################
+# Window Flags
+#############################################
+
+# Toggle sticky
+super + s
+    bspc node -g sticky
+
+# Toggle private
+super + p
+    bspc node -g private
+
+# Toggle locked
+super + shift + l
+    bspc node -g locked
+
+#############################################
+# Focus/Swap Windows
+#############################################
+
+# Focus window in direction (vim keys)
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+# Swap window in direction (vim keys)
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+# Focus next/previous window
+super + {comma,period}
+    bspc node -f {next,prev}.local.!hidden.window
+
+# Focus older/newer node in history
+super + {o,i}
+    bspc wm -h off; \
+    bspc node {older,newer} -f; \
+    bspc wm -h on
+
+#############################################
+# Workspaces
+#############################################
+
+# Focus workspace
+super + {1-6}
+    bspc desktop -f '^{1-6}'
+
+# Send window to workspace
+super + shift + {1-6}
+    bspc node -d '^{1-6}'
+
+# Send window to workspace and follow
+super + ctrl + {1-6}
+    bspc node -d '^{1-6}' --follow
+
+# Focus next/previous workspace
+super + bracket{left,right}
+    bspc desktop -f {prev,next}.local
+
+# Focus last workspace
+super + grave
+    bspc desktop -f last
+
+#############################################
+# Monitor Management
+#############################################
+
+# Focus next/previous monitor
+super + alt + {h,l}
+    bspc monitor -f {prev,next}
+
+# Send window to next/previous monitor
+super + alt + shift + {h,l}
+    bspc node -m {prev,next} --follow
+
+#############################################
+# Preselection
+#############################################
+
+# Preselect direction
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+# Preselect ratio
+super + ctrl + {1-9}
+    bspc node -o 0.{1-9}
+
+# Cancel preselection for focused node
+super + ctrl + space
+    bspc node -p cancel
+
+# Cancel preselection for focused desktop
+super + ctrl + shift + space
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#############################################
+# Resize Windows
+#############################################
+
+# Expand window
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# Contract window
+super + alt + shift + {h,j,k,l}
+    bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Move floating window
+super + {Left,Down,Up,Right}
+    bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#############################################
+# Layout Management
+#############################################
+
+# Rotate tree
+super + r
+    bspc node @/ -R 90
+
+# Balance tree
+super + shift + b
+    bspc node @/ -B
+
+# Equalize tree
+super + ctrl + b
+    bspc node @/ -E
+
+# Circulate windows
+super + {_,shift + }c
+    bspc node @/ -C {forward,backward}
+
+#############################################
+# Gaps Management
+#############################################
+
+# Increase gaps
+super + plus
+    bspc config -d focused window_gap $(($(bspc config -d focused window_gap) + 2))
+
+# Decrease gaps
+super + minus
+    bspc config -d focused window_gap $(($(bspc config -d focused window_gap) - 2))
+
+# Reset gaps
+super + equal
+    bspc config -d focused window_gap 12
+
+# Toggle gaps
+super + shift + g
+    if [ "$(bspc config -d focused window_gap)" -eq 0 ]; then \
+        bspc config -d focused window_gap 12; \
+    else \
+        bspc config -d focused window_gap 0; \
+    fi
+
+#############################################
+# Utilities
+#############################################
+
+# Change wallpaper
+super + w
+    ~/.local/bin/wallpaper-changer.sh
+
+# Theme switcher
+super + shift + w
+    ~/.local/bin/theme-switcher.sh
+
+# Show keybindings help
+super + F1
+    kitty -e less ~/.config/sxhkd/sxhkdrc

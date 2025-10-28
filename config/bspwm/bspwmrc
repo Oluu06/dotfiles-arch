@@ -1,0 +1,150 @@
+#!/bin/bash
+
+#############################################
+# bspwm Configuration
+# Modern, Fluid, Minimal Window Manager
+#############################################
+
+#############################################
+# Autostart
+#############################################
+
+# Kill existing processes
+killall -q sxhkd polybar picom dunst
+
+# Wait for processes to shut down
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+# Start sxhkd (keybindings daemon)
+sxhkd &
+
+# Start compositor
+picom --config ~/.config/picom/picom.conf &
+
+# Start notification daemon
+dunst &
+
+# Start polybar
+~/.config/polybar/launch.sh &
+
+# Set wallpaper
+if [ -f ~/.config/themes/current/wallpapers/default.jpg ]; then
+    feh --bg-fill ~/.config/themes/current/wallpapers/default.jpg &
+elif [ -f ~/.local/share/wallpapers/default.jpg ]; then
+    feh --bg-fill ~/.local/share/wallpapers/default.jpg &
+fi
+
+# Apply pywal colors if cache exists
+if [ -f ~/.cache/wal/colors.sh ]; then
+    source ~/.cache/wal/colors.sh
+fi
+
+# Start network manager applet
+nm-applet &
+
+# Start bluetooth manager
+blueman-applet &
+
+# Set cursor
+xsetroot -cursor_name left_ptr &
+
+# Disable screen blanking
+xset s off &
+xset -dpms &
+
+#############################################
+# Monitor Configuration
+#############################################
+
+# Detect monitors and configure workspaces
+if xrandr -q | grep "HDMI-1 connected"; then
+    # Dual monitor setup
+    bspc monitor eDP-1 -d 1 2 3
+    bspc monitor HDMI-1 -d 4 5 6
+else
+    # Single monitor setup
+    bspc monitor -d 1 2 3 4 5 6
+fi
+
+#############################################
+# bspwm Configuration
+#############################################
+
+# Window appearance
+bspc config border_width         2
+bspc config window_gap           12
+bspc config split_ratio          0.52
+
+# Border colors (Catppuccin Mocha)
+bspc config normal_border_color   "#313244"
+bspc config active_border_color   "#6c7086"
+bspc config focused_border_color  "#89b4fa"
+bspc config presel_feedback_color "#f38ba8"
+
+# Window behavior
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+bspc config paddingless_monocle   true
+
+# Focus behavior
+bspc config focus_follows_pointer false
+bspc config pointer_follows_focus false
+bspc config pointer_follows_monitor true
+
+# Monocle mode
+bspc config single_monocle        false
+
+# Automatic scheme
+bspc config automatic_scheme      longest_side
+
+# Initial polarity
+bspc config initial_polarity      second_child
+
+# Directional focus wrapping
+bspc config directional_focus_tightness low
+
+# Removal behavior
+bspc config removal_adjustment    true
+
+#############################################
+# Window Rules
+#############################################
+
+# Remove all rules first
+bspc rule -r "*"
+
+# Floating windows
+bspc rule -a Thunar state=floating rectangle=900x600+0+0 center=true
+bspc rule -a Pavucontrol state=floating rectangle=700x500+0+0 center=true
+bspc rule -a Blueman-manager state=floating rectangle=700x500+0+0 center=true
+bspc rule -a Nm-connection-editor state=floating rectangle=600x400+0+0 center=true
+
+# Rofi
+bspc rule -a Rofi state=floating layer=above border=off
+
+# Flameshot
+bspc rule -a flameshot state=floating layer=above border=off
+
+# Picture-in-Picture
+bspc rule -a "*:*:Picture-in-Picture" state=floating sticky=on rectangle=640x360+0+0
+
+# Specific workspace assignments
+bspc rule -a firefox desktop='^2'
+bspc rule -a code desktop='^3'
+bspc rule -a discord desktop='^4'
+bspc rule -a Spotify desktop='^5'
+
+# Pseudo tiled
+bspc rule -a Gimp state=pseudo_tiled
+
+# Fullscreen
+bspc rule -a mpv state=fullscreen
+
+#############################################
+# External Rules
+#############################################
+
+# Use external rules script if exists
+if [ -f ~/.config/bspwm/external_rules.sh ]; then
+    bspc config external_rules_command ~/.config/bspwm/external_rules.sh
+fi

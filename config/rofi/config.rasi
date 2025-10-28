@@ -1,0 +1,24 @@
+/*******************************************************************************
+ * Rofi Configuration
+ * Catppuccin Mocha Theme
+ *******************************************************************************/
+
+configuration {
+    modi: "drun,run,window,ssh";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    display-drun: "  Apps";
+    display-run: "  Run";
+    display-window: "  Windows";
+    display-ssh: "  SSH";
+    drun-display-format: "{name}";
+    window-format: "{w} · {c} · {t}";
+    font: "JetBrainsMono Nerd Font 11";
+    
+    /* Behavior */
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+}
+
+@theme "launchers/launcher.rasi"

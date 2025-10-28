@@ -1,0 +1,65 @@
+/*******************************************************************************
+ * Rofi Powermenu Theme
+ * Catppuccin Mocha
+ *******************************************************************************/
+
+* {
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    fg: #cdd6f4;
+    
+    primary: #89b4fa;
+    alert: #f38ba8;
+    
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    location: center;
+    width: 400px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @primary;
+    border-radius: 10px;
+}
+
+mainbox {
+    padding: 20px;
+}
+
+message {
+    border: 0;
+    background-color: transparent;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+textbox {
+    text-color: @primary;
+    font: "JetBrainsMono Nerd Font Bold 14";
+    horizontal-align: 0.5;
+}
+
+listview {
+    lines: 5;
+    columns: 1;
+    spacing: 10px;
+}
+
+element {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: @bg-alt;
+}
+
+element selected {
+    background-color: @primary;
+    text-color: @bg;
+}
+
+element-text {
+    horizontal-align: 0.5;
+    vertical-align: 0.5;
+    font: "JetBrainsMono Nerd Font 12";
+}

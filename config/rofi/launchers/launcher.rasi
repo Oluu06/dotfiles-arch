@@ -1,0 +1,115 @@
+/*******************************************************************************
+ * Rofi Launcher Theme
+ * Catppuccin Mocha
+ *******************************************************************************/
+
+* {
+    /* Catppuccin Mocha Colors */
+    bg: #1e1e2e;
+    bg-alt: #313244;
+    fg: #cdd6f4;
+    fg-alt: #bac2de;
+    
+    primary: #89b4fa;
+    secondary: #f5c2e7;
+    alert: #f38ba8;
+    disabled: #6c7086;
+    
+    background-color: transparent;
+    text-color: @fg;
+    
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    location: center;
+    width: 600px;
+    background-color: @bg;
+    border: 2px;
+    border-color: @primary;
+    border-radius: 10px;
+}
+
+mainbox {
+    padding: 12px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-color: @primary;
+    border: 2px;
+    border-radius: 8px;
+    padding: 12px;
+    spacing: 12px;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: @primary;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @disabled;
+}
+
+message {
+    margin: 12px 0 0;
+    border-radius: 8px;
+    border-color: @bg-alt;
+    background-color: @bg-alt;
+}
+
+textbox {
+    padding: 12px;
+    background-color: @bg-alt;
+}
+
+listview {
+    background-color: transparent;
+    margin: 12px 0 0;
+    lines: 8;
+    columns: 1;
+    fixed-height: false;
+}
+
+element {
+    padding: 10px;
+    spacing: 10px;
+    border-radius: 8px;
+}
+
+element normal normal {
+    text-color: @fg;
+}
+
+element normal urgent {
+    text-color: @alert;
+}
+
+element normal active {
+    text-color: @primary;
+}
+
+element selected normal,
+element selected active {
+    background-color: @bg-alt;
+    text-color: @primary;
+}
+
+element selected urgent {
+    background-color: @alert;
+    text-color: @bg;
+}
+
+element-icon {
+    size: 1.2em;
+    vertical-align: 0.5;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+}
